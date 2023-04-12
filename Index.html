@@ -1,0 +1,166 @@
+Take Two:
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seamus ChatGPT</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.emailjs.com/sdk/3.1.0/email.min.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#" id="chatgpt-link">ChatGPT</a></li>
+          <li><a href="#" id="github-link">GitHub</a></li>
+          <li><a href="#" id="emailjs-link">Email</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Ask Seamus</h1>
+      <button id="startButton">Start Listening</button>
+      <button id="stopButton" disabled>Stop Listening</button>
+      <p id="transcript"></p>
+    </main>
+    <script>
+      const startButton = document.getElementById("startButton");
+      const stopButton = document.getElementById("stopButton");
+      const transcript = document.getElementById("transcript");
+
+      const emailAddress = "cmc3bear@gmail.com";
+
+      // EmailJS configuration
+      const serviceID = "your_emailjs_service_id";
+      const templateID = "your_emailjs_template_id";
+      const userID = "your_emailjs_user_id";
+      emailjs.init(userID);
+
+      const recognition = new (
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition ||
+        window.mozSpeechRecognition ||
+        window.msSpeechRecognition
+      )();
+
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      startButton.addEventListener("click", () => {
+        recognition.start();
+        startButton.disabled = true;
+        stopButton.disabled = false;
+      });
+
+      stopButton.addEventListener("click", () => {
+        recognition.stop();
+        startButton.disabled = false;
+        stopButton.disabled = true;
+      });
+
+      recognition.addEventListener("result", async (event) => {
+        const text = event.results[0][0].transcript;
+        transcript.textContent = `You said: ${text}`;
+        const response = await sendToGpt(text);
+        const summary = await sendToGpt(
+          `summarize the following text in 2 sentences: ${response}`
+        );
+        const emailTitle = await sendToGpt(
+          `generate a title for an email about the following conversation: ${text}`
+        );
+
+        speak(summary);
+
+        // Replace these values with the appropriate information
+        const recipientName = "Mr. Cunningham";
+        const yourName = "Seamus";
+        const conversationSummary = text;
+        const bulletPointSummary = summary;
+
+        sendEmail(
+          response,
+          emailAddress,
+          recipientName,
+          yourName,
+          conversationSummary,
+          bulletPointSummary,
+          emailTitle
+        );
+      });
+
+      async function sendToGpt(prompt) {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: prompt }),
+        });
+
+        const data = await response.json();
+        return data;
+      }
+
+      function speak(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+      }
+
+
+
+  function sendEmail(
+    response,
+    emailAddress,
+    recipientName,
+    yourName,
+    conversationSummary,
+    bulletPointSummary,
+    emailTitle
+  ) {
+    emailjs
+      .send(
+        serviceID,
+        templateID,
+        {
+          recipient_email: emailAddress,
+          recipient_name: recipientName,
+          your_name: yourName,
+          conversation_summary: conversationSummary,
+          bullet_point_summary: bulletPointSummary,
+          email_title: emailTitle,
+        },
+        userID
+      )
+      .then(
+        () => {
+          console.log("Email sent successfully.");
+        },
+        (error) => {
+          console.error("Email failed to send. Error: ", error);
+        }
+      );
+  }
+
+  // Modern website
+  const chatGptLink = document.getElementById("chatgpt-link");
+  const githubLink = document.getElementById("github-link");
+  const emailjsLink = document.getElementById("emailjs-link");
+
+  chatGptLink.addEventListener("click", () => {
+    window.location.href = "https://beta.openai.com/demo/";
+  });
+
+  githubLink.addEventListener("click", () => {
+    window.location.href = "https://github.com/";
+  });
+
+  emailjsLink.addEventListener("click", () => {
+    window.location.href = "https://www.emailjs.com/";
+  });
+</script>
+

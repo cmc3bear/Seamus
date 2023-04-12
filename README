@@ -1,0 +1,39 @@
+Project Seamus.
+Cortana and ChatGPT Integration
+This project demonstrates the integration of Cortana and OpenAI's ChatGPT to create an interactive voice-based AI chatbot. The user interacts with Cortana via voice, and Cortana sends the user's message to ChatGPT, which responds with a detailed answer. If the response is lengthy, Cortana will provide a summarized version and email the full response to a specified email address using EmailJS.
+
+Prerequisites
+To use this project, you'll need the following:
+Node.js installed on your local machine.
+An OpenAI API key for ChatGPT.
+An EmailJS account with a service, template, and user ID.
+
+Project Setup
+Clone or download the repository to your local machine.
+Run npm install in the project directory to install the required packages.
+Create a .env file in the project root and add your OpenAI API key:
+makefile
+Copy code
+OPENAI_API_KEY=your_openai_api_key
+Open the index.html file and update the following variables:
+emailAddress: The email address to which the detailed response will be sent.
+serviceID: Your EmailJS service ID.
+templateID: Your EmailJS template ID.
+userID: Your EmailJS user ID.
+Customize the email template to fit your needs.
+
+Usage
+Start the server by running node server.js.
+Open the index.html file in your web browser.
+Click the "Start Listening" button to start voice recognition.
+Speak your query or statement, and Cortana will send it to ChatGPT.
+Cortana will receive the response, provide a summary if needed, and speak it out loud.
+If the response is lengthy, Cortana will also send the full response to the specified email address.
+Variables
+apiKey: This variable is set in the server.js file, and it stores your OpenAI API key obtained from the .env file. It is used for making requests to the ChatGPT API.
+apiUrl: This variable is set in the server.js file, and it stores the URL for the ChatGPT API. It is used for making requests to the ChatGPT API.
+emailAddress, serviceID, templateID, and userID: These variables are set in the index.html file. They store the email address to which the detailed response will be sent and the EmailJS service, template, and user IDs for sending the email. These variables are used for configuring and sending emails using the EmailJS library.
+prompt: This variable is set in the server.js file, and it stores the text spoken by the user. It is sent as a prompt to the ChatGPT API to generate a response.
+
+response: This variable is set in the index.html file, and it stores the ChatGPT response. It is used for generating a summary, speaking the response using Cortana, and sending the email with the detailed response.
+summary: This variable is set in the index.html file, and it stores the summarized version of ChatGPT's response. It is used for speaking the summary using Cortana and sending the email with the bullet-point summary.

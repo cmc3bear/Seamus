@@ -1,0 +1,28 @@
+{
+  "name": "jarvis",
+  "version": "1.0.0",
+  "description": "Project Seamus.\r Cortana and ChatGPT Integration\r This project demonstrates the integration of Cortana and OpenAI's ChatGPT to create an interactive voice-based AI chatbot. The user interacts with Cortana via voice, and Cortana sends the user's message to ChatGPT, which responds with a detailed answer. If the response is lengthy, Cortana will provide a summarized version and email the full response to a specified email address using EmailJS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Cary Cunningham",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.3.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmc3bear/Seamus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cmc3bear/Seamus/issues"
+  },
+  "homepage": "https://github.com/cmc3bear/Seamus#readme"
+}
