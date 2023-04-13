@@ -1,5 +1,3 @@
-Take Two:
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,9 +33,9 @@ Take Two:
       const emailAddress = "cmc3bear@gmail.com";
 
       // EmailJS configuration
-      const serviceID = "your_emailjs_service_id";
-      const templateID = "your_emailjs_template_id";
-      const userID = "your_emailjs_user_id";
+      const serviceID = "service_1r8gxzb";
+      const templateID = "SeamusSumaries";
+      const userID = "BhSGLTTBTfFqE1Ij6";
       emailjs.init(userID);
 
       const recognition = new (
@@ -107,60 +105,59 @@ Take Two:
       }
 
       function speak(text) {
-        const utterance = new SpeechSynthesisUtterance(text);
+              const utterance = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(utterance);
       }
 
+      function sendEmail(
+        response,
+        emailAddress,
+        recipientName,
+        yourName,
+        conversationSummary,
+        bulletPointSummary,
+        emailTitle
+      ) {
+        emailjs
+          .send(
+            serviceID,
+            templateID,
+            {
+              recipient_email: emailAddress,
+              recipient_name: recipientName,
+              your_name: yourName,
+              conversation_summary: conversationSummary,
+              bullet_point_summary: bulletPointSummary,
+              email_title: emailTitle,
+            },
+            userID
+          )
+          .then(
+            () => {
+              console.log("Email sent successfully.");
+            },
+            (error) => {
+              console.error("Email failed to send. Error: ", error);
+            }
+          );
+      }
 
+      // Modern website
+      const chatGptLink = document.getElementById("chatgpt-link");
+      const githubLink = document.getElementById("github-link");
+      const emailjsLink = document.getElementById("emailjs-link");
 
-  function sendEmail(
-    response,
-    emailAddress,
-    recipientName,
-    yourName,
-    conversationSummary,
-    bulletPointSummary,
-    emailTitle
-  ) {
-    emailjs
-      .send(
-        serviceID,
-        templateID,
-        {
-          recipient_email: emailAddress,
-          recipient_name: recipientName,
-          your_name: yourName,
-          conversation_summary: conversationSummary,
-          bullet_point_summary: bulletPointSummary,
-          email_title: emailTitle,
-        },
-        userID
-      )
-      .then(
-        () => {
-          console.log("Email sent successfully.");
-        },
-        (error) => {
-          console.error("Email failed to send. Error: ", error);
-        }
-      );
-  }
+      chatGptLink.addEventListener("click", () => {
+        window.location.href = "https://beta.openai.com/demo/";
+      });
 
-  // Modern website
-  const chatGptLink = document.getElementById("chatgpt-link");
-  const githubLink = document.getElementById("github-link");
-  const emailjsLink = document.getElementById("emailjs-link");
+      githubLink.addEventListener("click", () => {
+        window.location.href = "https://github.com/";
+      });
 
-  chatGptLink.addEventListener("click", () => {
-    window.location.href = "https://beta.openai.com/demo/";
-  });
-
-  githubLink.addEventListener("click", () => {
-    window.location.href = "https://github.com/";
-  });
-
-  emailjsLink.addEventListener("click", () => {
-    window.location.href = "https://www.emailjs.com/";
-  });
-</script>
-
+      emailjsLink.addEventListener("click", () => {
+        window.location.href = "https://www.emailjs.com/";
+      });
+    </script>
+  </body>
+</html>
